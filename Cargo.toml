@@ -5,7 +5,31 @@ authors = ["Erick Tryzelaar <erick.tryzelaar@gmail.com>"]
 license = "MIT/Apache-2.0"
 description = "A quasi-quoting macro system"
 repository = "https://github.com/erickt/rust-quasi"
+build = "build.rs"
+
+[lib]
+name = "quasi"
+test = false
+
+[dependencies]
+syntex = "*"
+syntex_syntax = "*"
+
+[build-dependencies]
+syntex = "*"
+quasi_macros = "*"
 
 [dev-dependencies.quasi_macros]
-path = "quasi_macros"
 version = "0.1.9"
+path = "quasi_macros"
+
+[dev-dependencies]
+syntex = { version = "*" }
+
+[dev-dependencies.syntex_syntax]
+version = "*"
+path = "../rust-syntex/syntex_syntax"
+
+[[test]]
+name = "test"
+path = "tests/test.rs"

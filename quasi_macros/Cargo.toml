@@ -10,5 +10,16 @@ repository = "https://github.com/erickt/rust-quasi"
 name = "quasi_macros"
 plugin = true
 
-[dependencies]
-aster = "*"
+[features]
+default = ["syntex", "syntex_syntax"]
+
+[dependencies.aster]
+version = "*"
+
+[dependencies.syntex]
+version = "*"
+optional = true
+
+[dependencies.syntex_syntax]
+version = "*"
+optional = true

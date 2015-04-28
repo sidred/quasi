@@ -8,10 +8,21 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![feature(plugin, rustc_private)]
+include!(concat!(env!("OUT_DIR"), "/test.rs"));
+
+/*
+//#![cfg_attr(not(feature = "syntex_syntax"), feature(plugin, rustc_private))]
+//#![cfg_attr(not(feature = "syntex_syntax"), plugin(quasi_macros))]
+
+#![feature(plugin)]
 #![plugin(quasi_macros)]
 
-extern crate syntax;
+//#[cfg(feature = "syntex_syntax")]
+extern crate syntex_syntax as syntax;
+
+//#[cfg(not(feature = "syntex_syntax"))]
+//extern crate syntax;
+
 extern crate quasi;
 
 use syntax::ext::base::ExtCtxt;
@@ -31,11 +42,7 @@ fn make_ext_ctxt(sess: &parse::ParseSess) -> ExtCtxt {
     };
 
     let cfg = vec![];
-    let ecfg = expand::ExpansionConfig {
-        crate_name: String::new(),
-        features: None,
-        recursion_limit: 64,
-    };
+    let ecfg = expand::ExpansionConfig::default(String::new());
 
     let mut cx = ExtCtxt::new(&sess, cfg, ecfg);
     cx.bt_push(info);
@@ -194,3 +201,4 @@ fn test_quote_with_macro() {
 
     assert_eq!(pprust::block_to_string(&block), "{ value!() }");
 }
+*/

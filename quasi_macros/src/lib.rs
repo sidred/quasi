@@ -8,11 +8,21 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![feature(plugin_registrar, unboxed_closures, rustc_private)]
+#![cfg_attr(not(feature = "syntex"), feature(plugin_registrar, unboxed_closures, rustc_private))]
 
-extern crate syntax;
-extern crate rustc;
 extern crate aster;
+
+#[cfg(not(feature = "syntex"))]
+extern crate rustc;
+
+#[cfg(feature = "syntex")]
+extern crate syntex;
+
+#[cfg(feature = "syntex")]
+extern crate syntex_syntax as syntax;
+
+#[cfg(not(feature = "syntex"))]
+extern crate syntax;
 
 use syntax::ast;
 use syntax::codemap::Span;
@@ -22,6 +32,7 @@ use syntax::parse::token::*;
 use syntax::parse::token;
 use syntax::ptr::P;
 
+#[cfg(not(feature = "syntex"))]
 use rustc::plugin::Registry;
 
 ///  Quasiquoting works via token trees.
@@ -41,10 +52,10 @@ pub fn expand_quote_tokens<'cx>(
     base::MacEager::expr(expanded)
 }
 
-pub fn expand_quote_ty(cx: &mut ExtCtxt,
-                       sp: Span,
-                       tts: &[ast::TokenTree])
-                       -> Box<base::MacResult+'static> {
+pub fn expand_quote_ty<'cx>(cx: &mut ExtCtxt,
+                            sp: Span,
+                            tts: &[ast::TokenTree])
+                            -> Box<base::MacResult+'cx> {
     let expanded = expand_parse_call(cx, sp, "parse_ty", vec!(), tts);
     base::MacEager::expr(expanded)
 }
@@ -57,18 +68,18 @@ pub fn expand_quote_expr<'cx>(cx: &'cx mut ExtCtxt,
     base::MacEager::expr(expanded)
 }
 
-pub fn expand_quote_stmt(cx: &mut ExtCtxt,
-                         sp: Span,
-                         tts: &[ast::TokenTree])
-                         -> Box<base::MacResult+'static> {
+pub fn expand_quote_stmt<'cx>(cx: &mut ExtCtxt,
+                              sp: Span,
+                              tts: &[ast::TokenTree])
+                              -> Box<base::MacResult+'cx> {
     let expanded = expand_parse_call(cx, sp, "parse_stmt", vec!(), tts);
     base::MacEager::expr(expanded)
 }
 
-pub fn expand_quote_attr(cx: &mut ExtCtxt,
-                         sp: Span,
-                         tts: &[ast::TokenTree])
-                         -> Box<base::MacResult+'static> {
+pub fn expand_quote_attr<'cx>(cx: &mut ExtCtxt,
+                              sp: Span,
+                              tts: &[ast::TokenTree])
+                              -> Box<base::MacResult+'cx> {
     let builder = aster::AstBuilder::new().span(sp);
 
     let expanded = expand_parse_call(cx, sp, "parse_attribute",
@@ -77,10 +88,10 @@ pub fn expand_quote_attr(cx: &mut ExtCtxt,
     base::MacEager::expr(expanded)
 }
 
-pub fn expand_quote_matcher(cx: &mut ExtCtxt,
-                            sp: Span,
-                            tts: &[ast::TokenTree])
-                            -> Box<base::MacResult+'static> {
+pub fn expand_quote_matcher<'cx>(cx: &mut ExtCtxt,
+                                 sp: Span,
+                                 tts: &[ast::TokenTree])
+                                 -> Box<base::MacResult+'cx> {
     let builder = aster::AstBuilder::new().span(sp);
 
     let (cx_expr, tts) = parse_arguments_to_quote(cx, tts);
@@ -103,10 +114,10 @@ pub fn expand_quote_pat<'cx>(cx: &'cx mut ExtCtxt,
     base::MacEager::expr(expanded)
 }
 
-pub fn expand_quote_arm(cx: &mut ExtCtxt,
-                        sp: Span,
-                        tts: &[ast::TokenTree])
-                        -> Box<base::MacResult+'static> {
+pub fn expand_quote_arm<'cx>(cx: &mut ExtCtxt,
+                             sp: Span,
+                             tts: &[ast::TokenTree])
+                             -> Box<base::MacResult+'cx> {
     let expanded = expand_parse_call(cx, sp, "parse_arm", vec!(), tts);
     base::MacEager::expr(expanded)
 }
@@ -137,7 +148,6 @@ pub fn expand_quote_impl_item<'cx>(cx: &mut ExtCtxt,
     base::MacEager::expr(expanded)
 }
 
-/*
 pub fn expand_quote_where_clause<'cx>(cx: &mut ExtCtxt,
                                       sp: Span,
                                       tts: &[ast::TokenTree])
@@ -146,7 +156,6 @@ pub fn expand_quote_where_clause<'cx>(cx: &mut ExtCtxt,
                                     vec!(), tts);
     base::MacEager::expr(expanded)
 }
-*/
 
 // Lift an ident to the expr that evaluates to that ident.
 fn mk_ident(builder: &aster::AstBuilder, ident: ast::Ident) -> P<ast::Expr> {
@@ -652,6 +661,23 @@ fn expand_parse_call(cx: &ExtCtxt,
     }
 }
 
+#[cfg(feature = "syntex")]
+pub fn register(reg: &mut syntex::Registry) {
+    reg.register_macro("quote_tokens", expand_quote_tokens);
+    reg.register_macro("quote_ty", expand_quote_ty);
+    reg.register_macro("quote_expr", expand_quote_expr);
+    reg.register_macro("quote_matcher", expand_quote_matcher);
+    reg.register_macro("quote_stmt", expand_quote_stmt);
+    reg.register_macro("quote_attr", expand_quote_attr);
+    reg.register_macro("quote_pat", expand_quote_pat);
+    reg.register_macro("quote_arm", expand_quote_arm);
+    reg.register_macro("quote_block", expand_quote_block);
+    reg.register_macro("quote_item", expand_quote_item);
+    reg.register_macro("quote_impl_item", expand_quote_impl_item);
+    reg.register_macro("quote_where_clause", expand_quote_where_clause);
+}
+
+#[cfg(not(feature = "syntex"))]
 #[plugin_registrar]
 #[doc(hidden)]
 pub fn plugin_registrar(reg: &mut Registry) {
@@ -666,5 +692,5 @@ pub fn plugin_registrar(reg: &mut Registry) {
     reg.register_macro("quote_block", expand_quote_block);
     reg.register_macro("quote_item", expand_quote_item);
     reg.register_macro("quote_impl_item", expand_quote_impl_item);
-    //reg.register_macro("quote_where_clause", expand_quote_where_clause);
+    reg.register_macro("quote_where_clause", expand_quote_where_clause);
 }
