@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![cfg_attr(not(feature = "syntex"), feature(plugin_registrar, unboxed_closures, rustc_private))]
+#![cfg_attr(not(feature = "syntex"), feature(rustc_private))]
 
 extern crate aster;
 
@@ -671,7 +671,6 @@ pub fn expand_quote_tokens<'cx>(
     let expanded = expand_wrapper(sp, cx_expr, expr, &[&["quasi"]]);
     base::MacEager::expr(expanded)
 }
-
 
 #[cfg(feature = "syntex")]
 pub fn register(reg: &mut syntex::Registry) {

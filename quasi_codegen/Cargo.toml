@@ -6,5 +6,10 @@ license = "MIT/Apache-2.0"
 description = "A quasi-quoting macro system"
 repository = "https://github.com/erickt/rust-quasi"
 
+[features]
+default = ["syntex", "syntex_syntax"]
+
 [dependencies]
 aster = "*"
+syntex = { version = "*", optional = true }
+syntex_syntax = { version = "*", optional = true }
