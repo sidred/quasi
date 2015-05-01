@@ -8,14 +8,19 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![feature(collections, rustc_private)]
+#![cfg_attr(not(feature = "syntex_syntax"), feature(rustc_private))]
 
+#[cfg(feature = "syntex_syntax")]
+extern crate syntex_syntax as syntax;
+
+#[cfg(not(feature = "syntex_syntax"))]
 extern crate syntax;
 
-use syntax::ast;
+use syntax::ast::{self, TokenTree, Generics, Expr};
 use syntax::codemap::Spanned;
 use syntax::ext::base::ExtCtxt;
 use syntax::parse::token;
+use syntax::parse::parse_tts_from_source_str;
 use syntax::parse;
 use syntax::ptr::P;
 use std::rc::Rc;

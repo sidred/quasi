@@ -9,7 +9,14 @@ build = "build.rs"
 
 [build-dependencies]
 quasi_codegen = { version = "*", path = "quasi_codegen" }
+syntex = "*"
+
+[features]
+default = ["syntex_syntax"]
+
+[dependencies]
+syntex_syntax = { version = "*", optional = true }
 
 [dev-dependencies]
 quasi_macros = { version = "*", path = "quasi_macros" }
-syntex_syntax = "*"
+syntex_syntax = { version = "*" }

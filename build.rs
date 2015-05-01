@@ -9,8 +9,8 @@ fn main() {
     let mut registry = syntex::Registry::new();
     quasi_codegen::register(&mut registry);
 
-    let src = Path::new("tests/test_macros.rs.in").unwrap();
-    let dst = Path::new(out_dir).join("test_codegen.rs");
+    let src = Path::new("tests/test_macros.rs.in");
+    let dst = Path::new(&out_dir).join("test_codegen.rs");
 
-    registry.expand(src, dst).unwrap();
+    registry.expand("", &src, &dst).unwrap();
 }
