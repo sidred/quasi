@@ -6,18 +6,23 @@ license = "MIT/Apache-2.0"
 description = "A quasi-quoting macro system"
 repository = "https://github.com/erickt/rust-quasi"
 build = "build.rs"
-
-[build-dependencies]
-quasi_codegen = { version = "*", path = "quasi_codegen" }
-syntex = "*"
+test = false
 
 [features]
-default = ["syntex_syntax"]
+default = ["quasi_codegen", "syntex", "syntex_syntax"] #, "aster/default"]
+nightly = [] #"aster/nightly"]
+
+[build-dependencies]
+quasi_codegen = { version = "*", path = "quasi_codegen", optional = true }
+syntex = { version = "*", optional = true }
+syntex_syntax = { version = "*", optional = true }
 
 [dependencies]
+syntex = { version = "*", optional = true }
 syntex_syntax = { version = "*", optional = true }
 
 [dev-dependencies]
-aster = "*"
-quasi_macros = { version = "*", path = "quasi_macros" }
-syntex_syntax = { version = "*" }
+#aster = { version = "*", path = "../rust-aster", default-features = false }
+quasi_macros = { version = "*", path = "quasi_macros", default-features = false, features = [] }
+syntex = "*"
+#syntex_syntax = "*"

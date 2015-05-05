@@ -23,8 +23,6 @@ use syntax::parse::{self, classify, token};
 use syntax::ptr::P;
 use std::rc::Rc;
 
-use syntax::ast::{TokenTree, Expr};
-
 pub use syntax::parse::new_parser_from_tts;
 pub use syntax::codemap::{BytePos, Span, dummy_spanned, DUMMY_SP};
 
@@ -174,7 +172,7 @@ macro_rules! impl_to_tokens_slice {
                 let mut v = vec![];
                 for (i, x) in self.iter().enumerate() {
                     if i > 0 {
-                        v.push_all(&$sep);
+                        v.extend($sep.iter().cloned());
                     }
                     v.extend(x.to_tokens(cx));
                 }

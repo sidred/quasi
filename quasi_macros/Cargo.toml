@@ -11,4 +11,4 @@ name = "quasi_macros"
 plugin = true
 
 [dependencies]
-quasi_codegen = { version = "*", path = "../quasi_codegen", features = [] }
+quasi_codegen = { path = "../quasi_codegen", default_features = false, features = ["nightly"] }

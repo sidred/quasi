@@ -8,7 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+/*
 extern crate quasi;
 extern crate syntex_syntax as syntax;
 
 include!(concat!(env!("OUT_DIR"), "/test_codegen.rs"));
+*/
