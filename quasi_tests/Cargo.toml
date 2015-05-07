@@ -1,0 +1,26 @@
+[package]
+name = "quasi_tests"
+version = "0.2.0"
+authors = ["Erick Tryzelaar <erick.tryzelaar@gmail.com>"]
+license = "MIT/Apache-2.0"
+description = "A quasi-quoting macro system"
+repository = "https://github.com/erickt/rust-quasi"
+build = "build.rs"
+
+[features]
+default = ["quasi_codegen", "quasi_codegen/default", "syntex"] #, "aster/default"]
+nightly = [] #"aster/nightly", "quasi_codegen/nightly"]
+
+[build-dependencies]
+quasi_codegen = { version = "*", path = "../quasi_codegen", default-features = false, optional = true }
+syntex = { version = "*", optional = true }
+#syntex_syntax = { version = "*" }
+
+[dev-dependencies]
+aster = { path = "../../rust-aster", default-features = false }
+quasi = { path = ".." }
+quasi_macros = { path = "../quasi_macros" }
+syntex_syntax = "*"
+
+#quasi_macros = { version = "*", path = "../quasi_macros", default-features = false, features = [] }
+#syntex = "*"
