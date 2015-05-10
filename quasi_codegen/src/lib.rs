@@ -10,8 +10,10 @@
 
 #![feature(plugin_registrar, unboxed_closures, rustc_private)]
 
-extern crate aster;
+extern crate aster as aster_;
 extern crate syntax;
+
+use aster_::syntax as aster;
 
 use syntax::ast;
 use syntax::codemap::Span;
