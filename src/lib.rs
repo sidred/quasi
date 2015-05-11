@@ -8,18 +8,20 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![feature(collections, rustc_private)]
+#![cfg_attr(feature = "nightly"), feature(rustc_private))]
 
+#[cfg(feature = "syntex_syntax")]
+extern crate syntex_syntax as syntax;
+
+#[cfg(feature = "nightly")]
 extern crate syntax;
 
-use syntax::ast;
+use syntax::ast::{self, TokenTree, Generics, Expr};
 use syntax::codemap::Spanned;
 use syntax::ext::base::ExtCtxt;
 use syntax::parse::{self, classify, token};
 use syntax::ptr::P;
 use std::rc::Rc;
-
-use syntax::ast::{TokenTree, Expr};
 
 pub use syntax::parse::new_parser_from_tts;
 pub use syntax::codemap::{BytePos, Span, dummy_spanned, DUMMY_SP};
@@ -170,7 +172,7 @@ macro_rules! impl_to_tokens_slice {
                 let mut v = vec![];
                 for (i, x) in self.iter().enumerate() {
                     if i > 0 {
-                        v.push_all(&$sep);
+                        v.extend($sep.iter().cloned());
                     }
                     v.extend(x.to_tokens(cx));
                 }

@@ -1,11 +1,15 @@
 [package]
 name = "quasi"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Erick Tryzelaar <erick.tryzelaar@gmail.com>"]
 license = "MIT/Apache-2.0"
 description = "A quasi-quoting macro system"
 repository = "https://github.com/erickt/rust-quasi"
 
-[dev-dependencies]
-aster = "*"
-quasi_macros = { version = "*", path = "quasi_macros" }
+[features]
+default = ["syntex", "syntex_syntax"]
+nightly = []
+
+[dependencies]
+syntex = { version = "*", optional = true }
+syntex_syntax = { version = "*", optional = true }
