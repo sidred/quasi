@@ -191,6 +191,7 @@ fn mk_name<T>(builder: &aster::AstBuilder, name: T) -> P<ast::Expr>
 fn mk_ast_path(builder: &aster::AstBuilder, name: &str) -> P<ast::Expr> {
     builder.expr().path()
         .global()
+        .ids(&$module_path)
         .ids(&["syntax", "ast", name])
         .build()
 }
@@ -198,6 +199,7 @@ fn mk_ast_path(builder: &aster::AstBuilder, name: &str) -> P<ast::Expr> {
 fn mk_token_path(builder: &aster::AstBuilder, name: &str) -> P<ast::Expr> {
     builder.expr().path()
         .global()
+        .ids(&$module_path)
         .ids(&["syntax", "parse", "token", name])
         .build()
 }
@@ -652,22 +654,6 @@ fn expand_parse_call(cx: &ExtCtxt,
     } else {
         expand_wrapper(sp, cx_expr, expr, &[&$module_path])
     }
-}
-
-#[cfg(feature = "syntex")]
-pub fn register(reg: &mut syntex::Registry) {
-    reg.register_macro("quote_tokens", expand_quote_tokens);
-    reg.register_macro("quote_ty", expand_quote_ty);
-    reg.register_macro("quote_expr", expand_quote_expr);
-    reg.register_macro("quote_matcher", expand_quote_matcher);
-    reg.register_macro("quote_stmt", expand_quote_stmt);
-    reg.register_macro("quote_attr", expand_quote_attr);
-    reg.register_macro("quote_pat", expand_quote_pat);
-    reg.register_macro("quote_arm", expand_quote_arm);
-    reg.register_macro("quote_block", expand_quote_block);
-    reg.register_macro("quote_item", expand_quote_item);
-    reg.register_macro("quote_impl_item", expand_quote_impl_item);
-    //reg.register_macro("quote_where_clause", expand_quote_where_clause);
 }
 
 }}

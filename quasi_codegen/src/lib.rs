@@ -15,14 +15,19 @@ mod codegen_macro;
 
 #[cfg(feature = "nightly")]
 pub mod syntax {
-    extern crate aster_syntax as aster;
-    extern crate syntax;
+    pub extern crate aster_syntax as aster;
+    pub extern crate syntax;
 
     module!(["quasi", "syntax"]);
 }
 
 #[cfg(feature = "syntex")]
 pub mod syntex {
+    extern crate syntex;
+
+    pub extern crate aster_syntex as aster;
+    pub extern crate syntex_syntax as syntax;
+
     module!(["quasi", "syntex"]);
 
     pub fn register(reg: &mut syntex::Registry) {

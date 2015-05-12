@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate aster;
+extern crate aster_syntex as aster;
 extern crate quasi;
 extern crate syntex_syntax as syntax;
 

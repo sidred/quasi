@@ -9,9 +9,9 @@ build = "build.rs"
 
 [build-dependencies]
 quasi_codegen = { version = "*", path = "../quasi_codegen" }
-syntex = { version = "*" }
+syntex = "*"
 
 [dev-dependencies]
-aster = { path = "../../rust-aster", default-features = false }
+aster-syntex = { path = "../../rust-aster/aster-syntex" }
 quasi = { path = ".." }
 syntex_syntax = "*"

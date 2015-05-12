@@ -7,9 +7,11 @@ description = "A quasi-quoting macro system"
 repository = "https://github.com/erickt/rust-quasi"
 
 [features]
-default = ["aster-syntex"]
+default = ["aster-syntex", "syntex", "syntex_syntax"]
 nightly = ["aster-syntax"]
 
 [dependencies]
 aster-syntax = { path = "../../rust-aster/aster-syntax", optional = true }
 aster-syntex = { path = "../../rust-aster/aster-syntex", optional = true }
+syntex = { version = "*", optional = true }
+syntex_syntax = { version = "*", optional = true }

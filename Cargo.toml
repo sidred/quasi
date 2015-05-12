@@ -7,9 +7,13 @@ description = "A quasi-quoting macro system"
 repository = "https://github.com/erickt/rust-quasi"
 
 [features]
-default = ["syntex", "syntex_syntax"]
+default = ["syntex_syntax"]
 nightly = []
 
 [dependencies]
-syntex = { version = "*", optional = true }
 syntex_syntax = { version = "*", optional = true }
+
+#[dev-dependencies]
+#syntex = "*"
+#quasi_codegen = { version = "*", path = "quasi_codegen" }
+#quasi_macros = { version = "*", path = "quasi_macros" }
