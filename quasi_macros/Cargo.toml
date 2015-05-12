@@ -11,4 +11,8 @@ name = "quasi_macros"
 plugin = true
 
 [dependencies]
-quasi_codegen = { version = "*", path = "../quasi_codegen", features = ["nightly"] }
+quasi_codegen = { version = "*", path = "../quasi_codegen", default-features = false, features = ["nightly"] }
+
+[dev-dependencies]
+aster-syntax = { version = "*", path = "../../rust-aster/aster-syntax" }
+quasi = { version = "*", path = "..", default-features = false, features = ["nightly"] }

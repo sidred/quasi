@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![cfg_attr(feature = "nightly"), feature(rustc_private))]
+#![cfg_attr(feature = "nightly", feature(rustc_private))]
 
 #[cfg(feature = "syntex_syntax")]
 extern crate syntex_syntax as syntax;

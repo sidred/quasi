@@ -15,10 +15,8 @@ mod codegen_macro;
 
 #[cfg(feature = "nightly")]
 pub mod syntax {
-    extern crate aster as aster_;
+    extern crate aster_syntax as aster;
     extern crate syntax;
-
-    use self::aster_::syntax as aster;
 
     module!(["quasi", "syntax"]);
 }
