@@ -10,25 +10,11 @@
 
 #![feature(plugin_registrar, unboxed_closures, rustc_private)]
 
-extern crate quasi_codegen as quasi_codegen_;
+extern crate quasi_codegen;
 extern crate rustc;
-
-use rustc::plugin::Registry;
-use quasi_codegen_::syntax as quasi_codegen;
 
 #[plugin_registrar]
 #[doc(hidden)]
-pub fn plugin_registrar(reg: &mut Registry) {
-    reg.register_macro("quote_tokens", quasi_codegen::expand_quote_tokens);
-    reg.register_macro("quote_ty", quasi_codegen::expand_quote_ty);
-    reg.register_macro("quote_expr", quasi_codegen::expand_quote_expr);
-    reg.register_macro("quote_matcher", quasi_codegen::expand_quote_matcher);
-    reg.register_macro("quote_stmt", quasi_codegen::expand_quote_stmt);
-    reg.register_macro("quote_attr", quasi_codegen::expand_quote_attr);
-    reg.register_macro("quote_pat", quasi_codegen::expand_quote_pat);
-    reg.register_macro("quote_arm", quasi_codegen::expand_quote_arm);
-    reg.register_macro("quote_block", quasi_codegen::expand_quote_block);
-    reg.register_macro("quote_item", quasi_codegen::expand_quote_item);
-    reg.register_macro("quote_impl_item", quasi_codegen::expand_quote_impl_item);
-    //reg.register_macro("quote_where_clause", quasi_codegen::expand_quote_where_clause);
+pub fn plugin_registrar(reg: &mut rustc::plugin::Registry) {
+    quasi_codegen::syntax::register(reg);
 }

@@ -31,5 +31,3 @@ pub mod syntex {
 
     include!("lib.rs.in");
 }
-
-pub use syntex::syntax::parse::token::Paren;
