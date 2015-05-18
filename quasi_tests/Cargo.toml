@@ -9,10 +9,10 @@ build = "build.rs"
 
 [build-dependencies]
 quasi_codegen = { version = "*", path = "../quasi_codegen", features = ["with-syntex"] }
-syntex = { version = "*" }
+syntex = { version = "*", path = "../../rust-syntex/syntex" }
 
 [dev-dependencies]
-aster = { version = "*", features = ["with-syntex"] }
+aster = { version = "*", path = "../../rust-aster", features = ["with-syntex"] }
 quasi = { version = "*", path = "../quasi", features = ["with-syntex"] }
-syntex = { version = "*" }
-syntex_syntax = { version = "*" }
+syntex = { version = "*", path = "../../rust-syntex/syntex" }
+syntex_syntax = { version = "*", path = "../../rust-syntex/syntex_syntax" }

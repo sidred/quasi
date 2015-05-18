@@ -14,5 +14,5 @@ plugin = true
 quasi_codegen = { version = "*", path = "../quasi_codegen" }
 
 [dev-dependencies]
-aster = "*"
+aster = { version = "*", path = "../../rust-aster" }
 quasi = { version = "*", path = "../quasi" }

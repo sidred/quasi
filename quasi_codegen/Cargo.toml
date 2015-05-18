@@ -10,6 +10,6 @@ repository = "https://github.com/erickt/rust-quasi"
 with-syntex = ["syntex", "syntex_syntax", "aster/with-syntex"]
 
 [dependencies]
-aster = { version = "*", default-features = false }
-syntex = { version = "*", optional = true }
-syntex_syntax = { version = "*", optional = true }
+aster = { version = "*", path = "../../rust-aster", default-features = false }
+syntex = { version = "*", path = "../../rust-syntex/syntex", optional = true }
+syntex_syntax = { version = "*", path = "../../rust-syntex/syntex_syntax", optional = true }
